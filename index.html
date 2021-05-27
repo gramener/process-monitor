@@ -69,38 +69,43 @@
     </row>
   </section>
 
+  <section class="container py-4 my-4 text-center">
+    <p>Not sure where to start?</p>
+    <a href="monitor" class="btn btn-lg btn-primary">Open the Monitor</a>
+  </section>
+
   <section class="container py-4 my-4 text-center bg-lighter">
-    <h1 class="h4 py-3 font-weight-bold">What does this application do?</h1>
+    <h1 class="h4 py-3 font-weight-bold">These Apps are Digital Twins</h1>
     <row class="row justify-content-center">
-      <column class="col-12 col-lg-3 d-flex">
-        <card class="card shadow my-4 pt-3 align-self-stretch">
-          <i class="card-img-top d-block far fa-thumbs-up fa-5x py-3 text-success"></i>
-          <div class="card-body">
-            <h5 class="card-title"><strong>Predict</strong> quality</h5>
-            <p class="card-text">
-              Using real-time data of reactor temperature, crystallizer cooling rate, its
-              stirring speed, etc, we predict whether this batch will be good or bad in real-time.
-            </p>
-          </div>
-        </card>
-      </column>
       <column class="col-12 col-lg-3 d-flex">
         <card class="card shadow my-4 pt-3 align-self-stretch">
           <i class="card-img-top d-block fas fa-wrench fa-5x py-3 text-danger"></i>
           <div class="card-body">
-            <h5 class="card-title"><strong>Fix</strong> batches</h5>
+            <h5 class="card-title"><strong>Operational</strong> twin</h5>
             <p class="card-text">
-              When we predict a bad batch, we alert the user. They can increase the crushing cycle
-              time to increase the fine particle ratio in the batch, <strong>reducing wastage</strong>.
+              Using real-time data of reactor temperature, crystallizer cooling rate, its
+              stirring speed, etc, we show the process progress live, <strong>reducing delay</strong>.
             </p>
           </div>
         </card>
       </column>
       <column class="col-12 col-lg-3 d-flex">
         <card class="card shadow my-4 pt-3 align-self-stretch">
-          <i class="card-img-top d-block far fa-star fa-5x py-3 text-primary"></i>
+          <i class="card-img-top d-block fas fa-chart-line fa-5x py-3 text-success"></i>
           <div class="card-body">
-            <h5 class="card-title"><strong>Optimize</strong> setup</h5>
+            <h5 class="card-title"><strong>Prediction</strong> twin</h5>
+            <p class="card-text">
+              Using input parameters, we predict whether the batch will be bad (i.e. have course powder).
+              Alerted users can increase crushing time to <strong>reduce wastage</strong>.
+            </p>
+          </div>
+        </card>
+      </column>
+      <column class="col-12 col-lg-3 d-flex">
+        <card class="card shadow my-4 pt-3 align-self-stretch">
+          <i class="card-img-top d-block fas fa-sliders-h fa-5x py-3 text-primary"></i>
+          <div class="card-body">
+            <h5 class="card-title"><strong>Simulation</strong> twin</h5>
             <p class="card-text">
               Analysts can re-run any past batch to automatically with parameters needed to
               fix the batch, <strong>reducing re-work</strong> and future monitoring cost.
@@ -112,8 +117,30 @@
   </section>
 
   <section class="container py-4 my-4 text-center">
-    <p>Not sure where to start?</p>
-    <a href="simulator" class="btn btn-lg btn-primary">Open Simulator</a>
+    <h1 class="h4 py-3 font-weight-bold">Try a 1-day Proof of Concept</h1>
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <h3 class="h5">1-hour discussion</h3>
+        <p><i class="card-img-top d-block fas fa-users fa-5x py-3 text-warning"></i></p>
+        <p>We’ll share questions upfront for us to discuss</p>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <h3 class="h5">Share process details</h3>
+        <p><i class="card-img-top d-block fas fa-industry fa-5x py-3 text-dark"></i></p>
+        <p>Share your process details and input parameters</p>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <h3 class="h5">… with sample data</h3>
+        <p><i class="card-img-top d-block fas fa-table fa-5x py-3 text-info"></i></p>
+        <p>Share batch & real-time data required for the PoC</p>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <h3 class="h5">See results in 24 hours</h3>
+        <p><i class="card-img-top d-block fas fa-clock fa-5x py-3 text-info"></i></p>
+        <p>We’ll teach you how to build this in a workshop</p>
+      </div>
+    </div>
+    <a href="https://gramener.com/demorequest/" class="btn btn-lg btn-primary">Request a PoC</a>
   </section>
 
   {% include template-footer.html %}
