@@ -81,7 +81,7 @@ def narrative(handler):
 
 def setup_users():
     users = pd.DataFrame([
-        {"user": user, "password": user, "role": "user"}
+        {"user": user, "password": user, "role": user}
         for user in ['supervisor', 'operator', 'analyst', 'inspector']
     ])
     folder = os.path.dirname(os.path.abspath(__file__))
