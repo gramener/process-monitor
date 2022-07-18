@@ -6,6 +6,7 @@
 variables:
   narrative: "Modifying {{ arg }} from {{ previous }} to {{ current }} {{ outcome_verb }} the batch"
   plant_ui: template-plant.html
+
 url:
   process-monitor/auth:
     pattern: /$YAMLURL/auth
@@ -118,11 +119,10 @@ url:
       headers:
         Cache-Control: "no-cache, no-store"
       config_dir: $YAMLPATH
-      template: mlhandler-template.html
       data:
         url: $YAMLPATH/data_input.csv
       model:
-        class: LogisticRegression
+        class: DecisionTreeClassifier
         target_col: Outcome
         exclude: [Batch Number]
         cats:
@@ -145,6 +145,11 @@ url:
     pattern: /$YAMLURL/logout/
     handler: LogoutHandler
 
+schedule:
+  process-monitor-setup-users:
+    function: process_monitor.setup_users()
+    startup: true
+
 # Gramex init configurations for app: process-monitor
 # ----------------------------------------------------------------------------
 import:
@@ -161,3 +166,8 @@ import:
       login_url: /$YAMLURL/auth
       membership:
         role: analyst
+
+test:
+  auth:
+    user: analyst
+    password: analyst

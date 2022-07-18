@@ -1,8 +1,10 @@
+import os
 import gramex.ml
 import gramex.cache
 from gramex.config import variables
 from tornado.template import Template
 import pandas as pd
+import sqlalchemy as sa
 
 modelinfo = gramex.cache.open('model.yaml', 'config', rel=True)
 
@@ -75,3 +77,14 @@ def narrative(handler):
         verb = 'spoils'
     return Template(variables['narrative']).generate(
         arg=arg, previous=previous, current=current, outcome_verb=verb)
+
+
+def setup_users():
+    users = pd.DataFrame([
+        {"user": user, "password": user, "role": "user"}
+        for user in ['supervisor', 'operator', 'analyst', 'inspector']
+    ])
+    folder = os.path.dirname(os.path.abspath(__file__))
+    auth_db = os.path.join(folder, 'auth.sqlite3')
+    engine = sa.create_engine(f'sqlite:///{auth_db}')
+    users.to_sql('users', engine, if_exists='replace', index=False)
