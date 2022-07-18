@@ -8,15 +8,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   {% include template-header.html %}
+  <script src="https://cdn.jsdelivr.net/npm/lodash/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uifactory@0.0.11/src/uifactory.js" import="@svg-chart"></script>
+  <script src="https://cdn.jsdelivr.net/npm/numeral@2.0.6/min/numeral.min.js"></script>
 </head>
 
 <body>
   {% set base = '.' %}
   {% include template-navbar.html %}
   {% set data_src = 'data' %}
-  {% include template-plant.html %}
+
+  <div class="container-fluid py-4">
+    <svg-chart class="d-block" src="plant.svg"
+      rules:js="{
+        '.time':                            {text: d => numeral(Math.round(d['Counter'] / 60)).format('00') + ':' + numeral(d['Counter'] % 60).format('00')},
+        '.Batch_Number':                    {text: d => d['Batch Number']},
+        '.Outcome_Fill':                    {fill: d => `url(#${d.Outcome})` },
+        '.Outcome':                         {text: d => d.Outcome},
+        '.Solvent_Amt':                     {text: d => d['Solvent Amt']},
+        '.Material_A':                      {text: d => d['Material A']},
+        '.Material_B':                      {text: d => d['Material B']},
+        '.Reactor_Fill':                    {fill: d => _.isNull(d['Reactor Temperature']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Reactor_Temperature':             {text: d => d['Reactor Temperature']},
+        '.Avg_Reactor_Temperature':         {text: d => d['Avg Reactor Temperature']},
+        '.Crystallizer_Fill':               {fill: d => _.isNull(d['Crystallizer Cooling Rate']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Crystallizer_Cooling_Rate':       {text: d => d['Crystallizer Cooling Rate']},
+        '.Crystallizer_Stirring_Speed':     {text: d => d['Crystallizer Stirring Speed']},
+        '.Avg_Crystallizer_Cooling_Rate':   {text: d => d['Avg Crystallizer Cooling Rate']},
+        '.Avg_Crystallizer_Stirring_Speed': {text: d => d['Avg Crystallizer Stirring Speed']},
+        '.Filter_1_Fill':                   {fill: d => _.isNull(d['Filter (1)']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Slurry_Tank_Fill':                {fill: d => _.isNull(d['Slurry Tank']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Filter_3_Fill':                   {fill: d => _.isNull(d['Filter (3)']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Dryer_Fill':                      {fill: d => _.isNull(d['Drying Speed']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Drying_Speed':                    {text: d => d['Drying Speed']},
+        '.Dryer_Temperature':               {text: d => d['Dryer Temperature']},
+        '.Avg_Drying_Speed':                {text: d => d['Avg Drying Speed']},
+        '.Avg_Dryer_Temperature':           {text: d => d['Avg Dryer Temperature']},
+        '.Crusher_Fill':                    {fill: d => _.isNull(d['Crushing speed']) ? 'url(#INACTIVE)' : 'url(#ACTIVE)'},
+        '.Avg_Crushing_speed':              {text: d => d['Avg Crushing speed']},
+        '.Crushing_speed':                  {text: d => d['Crushing speed']},
+        '.Coarse_Fill':                     {fill: d => d.Outcome == 'Good' ? 'url(#INACTIVE)' : 'url(#Bad)'},
+        '.Coarse_Text':                     {fill: d => d.Outcome == 'Good' ? '#000' : '#fff'},
+        '.Fine_Fill':                       {fill: d => d.Outcome == 'Good' ? 'url(#Good)' : 'url(#INACTIVE)'},
+        '.Fine_Text':                       {fill: d => d.Outcome == 'Good' ? '#fff' : '#000'},
+      }">
+    </svg-chart>
+  </div>
+
   {% include template-footer.html %}
   <script src="simulator.js"></script>
+  <script>
+    let svgChart = document.querySelector('svg-chart')
+    let url = g1.url.parse(location.href)
+    let q = url.searchKey
+    let index = q.time ? +q.time - 1 : 0
+    fetch('{{ data_src }}')
+      .then(r => r.json())
+      .then(data => {
+        function render() {
+          svgChart.update({data: data[index++]}, {noparse: true, render: true})
+          if (index < data.length)
+            setTimeout(render, 1000 / (q.speed || 10))
+        }
+        render()
+      })
+  </script>
 </body>
 
 </html>
