@@ -1,4 +1,3 @@
-path: $YAMLPATH/process-monitor.pkl
 features:
   categorical:
     - "Material A"

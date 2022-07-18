@@ -49,7 +49,9 @@ def simulate(df, handler):
 
 
 def predict(df):
-    model = gramex.ml.load(modelinfo.path)
+    folder = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(folder, os.path.basename(folder) + '.pkl')
+    model = gramex.ml.load(model_path)
     xdf = df[model.named_steps['transform']._feature_names_in].dropna()
     return pd.Series(model.predict(xdf), index=xdf.index)
 
