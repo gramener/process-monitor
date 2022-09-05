@@ -27,7 +27,7 @@ $(function() {
     })
     $.getJSON(q.toString())
       .done(function (data) {
-        var narrativeURL = g1.url.parse('/narrative')
+        var narrativeURL = g1.url.parse('narrative')
         if (Object.keys(predictInput).length == 0) {
           predictInput = data[0]
           narrativeURL.update({Outcome: predictInput.Outcome})
