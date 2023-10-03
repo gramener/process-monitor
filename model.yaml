@@ -20,12 +20,12 @@ values:
   Material B: [B1, B2]
   Solvent Amt: [Low, High]
   Catalyzer Type: [Standard, Enriched]
-  Avg Dryer Cycle Time (min): {min: 140, max: 150, default: 145, step: 1}
-  Avg Dryer Speed: {min: 20, max: 25, default: 22, step: 1}
-  Avg Dryer Temperature: {min: 60, max: 72, default: 70, step: 1}
-  Avg Crushing speed: {min: 12, max: 15, default: 14, step: 1}
-  Avg Crushing time (min): {min: 80, max: 100, default: 90, step: 1}
-  Avg Reactor Temperature: {min: 80, max: 86, default: 83, step: 1}
-  Avg Reaction Time (min): {min: 240, max: 256, default: 242, step: 1}
-  Avg Crystallizer Cooling Rate: {min: 60, max: 70, default: 65, step: 1}
-  Avg Crystallizer Stirring Speed: {min: 10, max: 15, default: 12, step: 1}
+  Avg Dryer Cycle Time (min): { min: 140, max: 150, default: 145, step: 1 }
+  Avg Dryer Speed: { min: 20, max: 25, default: 22, step: 1 }
+  Avg Dryer Temperature: { min: 60, max: 72, default: 70, step: 1 }
+  Avg Crushing speed: { min: 12, max: 15, default: 14, step: 1 }
+  Avg Crushing time (min): { min: 80, max: 100, default: 90, step: 1 }
+  Avg Reactor Temperature: { min: 80, max: 86, default: 83, step: 1 }
+  Avg Reaction Time (min): { min: 240, max: 256, default: 242, step: 1 }
+  Avg Crystallizer Cooling Rate: { min: 60, max: 70, default: 65, step: 1 }
+  Avg Crystallizer Stirring Speed: { min: 10, max: 15, default: 12, step: 1 }

@@ -1,8 +1,8 @@
 # See http://doc.gitlab.com/ce/ci/yaml/README.html
 
 validate:
-  script:
-    - validate v1
+  image: gramener/builderrors
+  script: builderrors
 
 # Deploy application to a server
 deploy-www:
