@@ -36,7 +36,7 @@ def classify(data, handler):
     df = data['batch'].assign(**data['summary'][summary].iloc[0])
     if is_simulate:
         df = simulate(df, handler)
-    df = df.join(df.expanding(numeric_only=True).mean().round(1).add_prefix('Avg '))
+    df = df.join(df.expanding().mean(numeric_only=True).round(1).add_prefix('Avg '))
     if is_simulate and is_predict:
         prediction = predict(df)
         df.loc[prediction.index, 'Outcome'] = prediction.values
