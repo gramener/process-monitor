@@ -14,4 +14,4 @@ deploy-www:
     URL: processmonitor
     SETUP: yarn install
     PORT: 8050
-    VERSION: py3v1
+    VERSION: py3v11
