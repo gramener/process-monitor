@@ -6,7 +6,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
   {% include template-header.html %}
 </head>
 
@@ -54,8 +54,8 @@
       </form>
     </div><!-- .card -->
   </div>
-  <script src="../ui/jquery/dist/jquery.min.js"></script>
-  <script src="../ui/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="ui/jquery/dist/jquery.min.js"></script>
+  <script src="ui/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   {% if 'hash' in kwargs.get('password', {}) %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <script>

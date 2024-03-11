@@ -23,19 +23,21 @@
 /* For v4 icons, use url("ui/font-awesome/css/font-awesome.min.css") */
 @import url("ui/@fortawesome/fontawesome-free/css/all.min.css");
 
-
 /* custom styles for app: process-monitor */
 .home .navbar {
   padding-top: 2em;
   padding-bottom: 2em;
 }
 
-.navbar-dark .navbar-nav .show>.nav-link, .navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .show > .nav-link,
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .nav-link.active {
   border-bottom: 2px solid var(--white);
 }
 
 .home {
-  background-image: url('img/wave.svg');
+  background-image: url("img/wave.svg");
   background-repeat: no-repeat;
   background-position: top center;
 }
@@ -59,9 +61,9 @@
   margin-top: 15vh;
 }
 
-@media (min-width:768px) {
+@media (min-width: 768px) {
   .mobile main {
-    background-image: url('img/iphone.svg');
+    background-image: url("img/iphone.svg");
     background-position: top center;
     background-repeat: no-repeat;
     background-size: 22rem;
@@ -78,13 +80,23 @@
   -webkit-appearance: none;
 }
 
-.result.Good { background-color: #c9fbcc; }
-.result.Bad { background-color: #fbe1c9; }
+.result.Good {
+  background-color: #c9fbcc;
+}
+.result.Bad {
+  background-color: #fbe1c9;
+}
 
-
-.controls { height: 50px; }
-.controls>div { width: 10.3%; position: absolute; }
-.controls input[type="range"] { width: 100%; }
+.controls {
+  height: 50px;
+}
+.controls > div {
+  width: 10.3%;
+  position: absolute;
+}
+.controls input[type="range"] {
+  width: 100%;
+}
 
 .features {
   display: grid;
@@ -93,7 +105,9 @@
 }
 
 @media (min-width: 768px) {
-  .features { grid-template-columns: 0.5fr 0.5fr; }
+  .features {
+    grid-template-columns: 0.5fr 0.5fr;
+  }
 }
 
 .features .feature {
@@ -101,7 +115,7 @@
   background-color: var(--light);
   display: flex;
   margin: 1rem 0;
-  box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 .features .feature p {
   margin: 0.5rem 1rem;

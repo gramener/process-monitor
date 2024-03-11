@@ -1,67 +1,75 @@
-/* globals ClipboardJS, config */
+/* globals ClipboardJS, g1, _ */
 
-var predictInput = {}
+var predictInput = {};
 
-$(function() {
+$(function () {
   // Sync number and range in input
-  $('.sync').on('input change', function () {
-    var id = '#' + this.id.replace(/-range$/, '')
-    $(id).val(this.value)
-    $(id + '-range').val(this.value)
-  })
+  $(".sync").on("input change", function () {
+    var id = "#" + this.id.replace(/-range$/, "");
+    $(id).val(this.value);
+    $(id + "-range").val(this.value);
+  });
 
   // When any input is changed, classify it
-  $('input, select').on('change', function () {
-    if (!$('form').get(0).reportValidity())
-      return
-    $('.copy-link').addClass('d-none')
-    var q = g1.url.parse('classify?' + decodeURI($('form').serialize()))
-    $('[one-hot-name]').each(function () {
-      var feature = $(this).attr('one-hot-name')
-      var to_update = {}
-      $('option', this).each(function () {
-        // q += this.selected ? '&' + feature + '=' + this.value : ''
-        if (this.selected) { to_update[feature] = this.value }
-      })
-      q.update(to_update)
-    })
-    $.getJSON(q.toString())
-      .done(function (data) {
-        var narrativeURL = g1.url.parse('narrative')
-        if (Object.keys(predictInput).length == 0) {
-          predictInput = data[0]
-          narrativeURL.update({Outcome: predictInput.Outcome})
-        } else {
-          narrativeURL.update(_.mapKeys(predictInput, (value, key) => { return 'prev_' + key }))
-          narrativeURL.update(data[0])
-        }
-        $.get(narrativeURL.toString()).done(function(r) {
-          predictInput = data[0]
-          $('#result-narrative').html(r)
-          $('.result').removeClass('Good Bad bg-light').addClass(data[0].Outcome)
-          // $('.result-text').text(data[0].Outcome)
+  $("input, select")
+    .on("change", function () {
+      if (!$("form").get(0).reportValidity()) return;
+      $(".copy-link").addClass("d-none");
+      var q = g1.url.parse("classify?" + decodeURI($("form").serialize()));
+      $("[one-hot-name]").each(function () {
+        var feature = $(this).attr("one-hot-name");
+        var to_update = {};
+        $("option", this).each(function () {
+          // q += this.selected ? '&' + feature + '=' + this.value : ''
+          if (this.selected) {
+            to_update[feature] = this.value;
+          }
+        });
+        q.update(to_update);
+      });
+      $.getJSON(q.toString())
+        .done(function (data) {
+          var narrativeURL = g1.url.parse("narrative");
+          if (Object.keys(predictInput).length == 0) {
+            predictInput = data[0];
+            narrativeURL.update({ Outcome: predictInput.Outcome });
+          } else {
+            narrativeURL.update(
+              _.mapKeys(predictInput, (value, key) => {
+                return "prev_" + key;
+              }),
+            );
+            narrativeURL.update(data[0]);
+          }
+          $.get(narrativeURL.toString()).done(function (r) {
+            predictInput = data[0];
+            $("#result-narrative").html(r);
+            $(".result").removeClass("Good Bad bg-light").addClass(data[0].Outcome);
+            // $('.result-text').text(data[0].Outcome)
+          });
         })
-      })
-      .fail(function () {
-        $('.result-text').html('in error <small>(see console log)</small>')
-        console.log('Classification failure', arguments)  // eslint-disable-line no-console
-      })
-  }).eq(0).trigger('change')
+        .fail(function () {
+          $(".result-text").html("in error <small>(see console log)</small>");
+          console.log("Classification failure", arguments); // eslint-disable-line no-console
+        });
+    })
+    .eq(0)
+    .trigger("change");
 
   // When copy button is clicked, copy permalink to clipboard and navigate to page without reload
-  new ClipboardJS('.copy', {
+  new ClipboardJS(".copy", {
     text: function () {
-      var url = location.search ? location.href.replace(location.search, '') : location.href
-      url += '?' + $('form').serialize()
-      history.pushState({}, document.title, url)
-      $('.copy').attr('disabled', true)
-      $('.copy-link').removeClass('d-none')
-      $('.copy-link a').attr('href', url)
+      var url = location.search ? location.href.replace(location.search, "") : location.href;
+      url += "?" + $("form").serialize();
+      history.pushState({}, document.title, url);
+      $(".copy").attr("disabled", true);
+      $(".copy-link").removeClass("d-none");
+      $(".copy-link a").attr("href", url);
       setTimeout(function () {
-        $('.copy').removeAttr('disabled')
-        $('.copy-link').addClass('d-none')
-      }, 2000)
-      return url
-    }
-  })
-})
+        $(".copy").removeAttr("disabled");
+        $(".copy-link").addClass("d-none");
+      }, 2000);
+      return url;
+    },
+  });
+});

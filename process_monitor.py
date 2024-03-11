@@ -15,20 +15,29 @@ def argparse(handler):
         reactor={'type': int, 'default': 100},
         crystallizer={'type': int, 'default': 100},
         dryer={'type': int, 'default': 100},
-        solvent={'type': str, 'default': ''})
+        solvent={'type': str, 'default': ''},
+    )
 
 
 def classify(data, handler):
     is_simulate = handler.path_args[0] == 'datasimulate'
     is_predict = any(k in handler.args for k in ['reactor', 'crystallizer', 'dryer', 'solvent'])
     summary = [
-        'Material A', 'Material B', 'Catalyzer Type', 'Solvent Amt', 'Dryer Cycle Time (min)',
-        'Dryer Speed', 'Crushing time (min)', 'Reaction Time (min)', 'Batch Number']
+        'Material A',
+        'Material B',
+        'Catalyzer Type',
+        'Solvent Amt',
+        'Dryer Cycle Time (min)',
+        'Dryer Speed',
+        'Crushing time (min)',
+        'Reaction Time (min)',
+        'Batch Number',
+    ]
     df = data['batch'].assign(**data['summary'][summary].iloc[0])
     if is_simulate:
         df = simulate(df, handler)
-    df = df.join(df.expanding().mean().round(1).add_prefix('Avg '))
-    if (is_simulate and is_predict):
+    df = df.join(df.expanding().mean(numeric_only=True).round(1).add_prefix('Avg '))
+    if is_simulate and is_predict:
         prediction = predict(df)
         df.loc[prediction.index, 'Outcome'] = prediction.values
     df['isGood'] = df['Outcome'].eq('Good').astype(int)
@@ -40,7 +49,8 @@ def simulate(df, handler):
     adjust = [
         ('reactor', 'Reactor Temperature'),
         ('crystallizer', 'Crystallizer Cooling Rate'),
-        ('dryer', 'Dryer Temperature')]
+        ('dryer', 'Dryer Temperature'),
+    ]
     for param, col in adjust:
         df[col] = (df[col] * q[param] / 100).round(1)
     if q.solvent:
@@ -78,14 +88,17 @@ def narrative(handler):
     elif (prev_outcome, curr_outcome) == ('Good', 'Bad'):
         verb = 'spoils'
     return Template(variables['narrative']).generate(
-        arg=arg, previous=previous, current=current, outcome_verb=verb)
+        arg=arg, previous=previous, current=current, outcome_verb=verb
+    )
 
 
 def setup_users():
-    users = pd.DataFrame([
-        {"user": user, "password": user, "role": user}
-        for user in ['supervisor', 'operator', 'analyst', 'inspector']
-    ])
+    users = pd.DataFrame(
+        [
+            {"user": user, "password": user, "role": user}
+            for user in ['supervisor', 'operator', 'analyst', 'inspector']
+        ]
+    )
     folder = os.path.dirname(os.path.abspath(__file__))
     auth_db = os.path.join(folder, 'auth.sqlite3')
     engine = sa.create_engine(f'sqlite:///{auth_db}')

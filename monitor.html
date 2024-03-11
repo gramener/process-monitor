@@ -58,6 +58,7 @@
   {% include template-footer.html %}
   <script src="simulator.js"></script>
   <script>
+    /* global g1 */
     let svgChart = document.querySelector('svg-chart')
     let url = g1.url.parse(location.href)
     let q = url.searchKey
